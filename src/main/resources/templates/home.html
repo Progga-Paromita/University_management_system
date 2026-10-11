@@ -254,15 +254,20 @@
 
 <main>
     <div class="hero-banner">
-        <h1>Welcome to Management Dashboard</h1>
-        <p>Complete web portal with full Create, Read, Update, and Delete (CRUD) operations for Admins, Teachers, and Students.</p>
+        <h1 sec:authorize="hasRole('ADMIN')">Administrator Dashboard</h1>
+        <h1 sec:authorize="hasRole('TEACHER') and !hasRole('ADMIN')">Teacher Dashboard</h1>
+        <h1 sec:authorize="hasRole('STUDENT') and !hasRole('ADMIN')">Student Dashboard</h1>
+        
+        <p sec:authorize="hasRole('ADMIN')">Welcome, Administrator. You have full access to manage Admins, Teachers, and Students.</p>
+        <p sec:authorize="hasRole('TEACHER') and !hasRole('ADMIN')">Welcome to the Teacher portal. You can view, add, update, and manage teacher profiles.</p>
+        <p sec:authorize="hasRole('STUDENT') and !hasRole('ADMIN')">Welcome to the Student portal. You can view, enroll, update, and manage student records.</p>
     </div>
 
-    <h2 class="section-title">Select Management Section</h2>
+    <h2 class="section-title">Available Management Operations</h2>
 
     <div class="cards-grid">
-        <!-- Admins Card -->
-        <div class="card">
+        <!-- Admins Card (Only visible to Admin) -->
+        <div class="card" sec:authorize="hasRole('ADMIN')">
             <div>
                 <div class="card-header">
                     <div class="card-title">Admins</div>
@@ -281,12 +286,13 @@
             <a th:href="@{/ui/admins}" class="btn-card">Manage Admins &rarr;</a>
         </div>
 
-        <!-- Teachers Card -->
-        <div class="card">
+        <!-- Teachers Card (Visible to Admin and Teacher) -->
+        <div class="card" sec:authorize="hasAnyRole('ADMIN', 'TEACHER')">
             <div>
                 <div class="card-header">
                     <div class="card-title">Teachers</div>
-                    <span class="role-tag tag-teacher">ADMIN &bull; TEACHER</span>
+                    <span class="role-tag tag-teacher" sec:authorize="hasRole('ADMIN')">ADMIN &bull; TEACHER</span>
+                    <span class="role-tag tag-teacher" sec:authorize="!hasRole('ADMIN')">TEACHER PORTAL</span>
                 </div>
                 <p class="card-desc">
                     Manage university academic faculty and teachers.
@@ -301,12 +307,13 @@
             <a th:href="@{/ui/teachers}" class="btn-card">Manage Teachers &rarr;</a>
         </div>
 
-        <!-- Students Card -->
-        <div class="card">
+        <!-- Students Card (Visible to Admin and Student) -->
+        <div class="card" sec:authorize="hasAnyRole('ADMIN', 'STUDENT')">
             <div>
                 <div class="card-header">
                     <div class="card-title">Students</div>
-                    <span class="role-tag tag-student">ADMIN &bull; STUDENT</span>
+                    <span class="role-tag tag-student" sec:authorize="hasRole('ADMIN')">ADMIN &bull; STUDENT</span>
+                    <span class="role-tag tag-student" sec:authorize="!hasRole('ADMIN')">STUDENT PORTAL</span>
                 </div>
                 <p class="card-desc">
                     Manage enrolled university students and records.

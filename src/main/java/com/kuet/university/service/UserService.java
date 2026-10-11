@@ -49,21 +49,27 @@ public class UserService {
     public User update(Long id, User input, User.Role role) {
         User user = getById(id, role);
 
-        if (!user.getUsername().equals(input.getUsername())
-                && repository.existsByUsername(input.getUsername())) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, "Username already exists");
+        if (input.getUsername() != null && !input.getUsername().isBlank()) {
+            if (!user.getUsername().equals(input.getUsername())
+                    && repository.existsByUsername(input.getUsername())) {
+                throw new ResponseStatusException(
+                        HttpStatus.CONFLICT, "Username already exists");
+            }
+            user.setUsername(input.getUsername());
         }
 
-        if (!user.getEmail().equals(input.getEmail())
-                && repository.existsByEmail(input.getEmail())) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, "Email already exists");
+        if (input.getEmail() != null && !input.getEmail().isBlank()) {
+            if (!user.getEmail().equals(input.getEmail())
+                    && repository.existsByEmail(input.getEmail())) {
+                throw new ResponseStatusException(
+                        HttpStatus.CONFLICT, "Email already exists");
+            }
+            user.setEmail(input.getEmail());
         }
 
-        user.setUsername(input.getUsername());
-        user.setFullName(input.getFullName());
-        user.setEmail(input.getEmail());
+        if (input.getFullName() != null && !input.getFullName().isBlank()) {
+            user.setFullName(input.getFullName());
+        }
 
         if (input.getPassword() != null
                 && !input.getPassword().isBlank()) {
