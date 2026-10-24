@@ -47,7 +47,7 @@ public class SecurityConfig {
                         )
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/error").permitAll()
+                        .requestMatchers("/login", "/error", "/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll()
 
                         .requestMatchers("/admins", "/admins/**")
                         .hasRole("ADMIN")
