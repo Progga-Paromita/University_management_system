@@ -1,4 +1,3 @@
-
 package com.kuet.university.service;
 
 import com.kuet.university.entity.User;
@@ -33,10 +32,34 @@ public class UserService {
     }
 
     public User create(User user, User.Role role) {
-        if (repository.existsByUsername(user.getUsername())
-                || repository.existsByEmail(user.getEmail())) {
+        if (user == null) {
             throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, "Username or email already exists");
+                    HttpStatus.BAD_REQUEST, "Request body is required");
+        }
+        if (user.getUsername() == null || user.getUsername().isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Username is required");
+        }
+        if (user.getPassword() == null || user.getPassword().isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Password is required");
+        }
+        if (user.getFullName() == null || user.getFullName().isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Full name is required");
+        }
+        if (user.getEmail() == null || user.getEmail().isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Email is required");
+        }
+
+        if (repository.existsByUsername(user.getUsername())) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Username already exists");
+        }
+        if (repository.existsByEmail(user.getEmail())) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Email already exists");
         }
 
         user.setId(null);
@@ -47,6 +70,10 @@ public class UserService {
     }
 
     public User update(Long id, User input, User.Role role) {
+        if (input == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Request body is required");
+        }
         User user = getById(id, role);
 
         if (input.getUsername() != null && !input.getUsername().isBlank()) {

@@ -39,7 +39,7 @@ public class DataInitializer {
             String email,
             User.Role role) {
 
-        if (!repository.existsByUsername(username)) {
+        if (!repository.existsByUsername(username) && !repository.existsByEmail(email)) {
             User user = new User();
             user.setUsername(username);
             user.setPassword(encoder.encode(password));

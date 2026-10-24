@@ -203,7 +203,7 @@
                 <td style="text-align: center;">
                     <div class="action-group" style="justify-content: center;">
                         <button class="btn-action btn-edit" onclick="openEditModal(${u.id})">✏️ Edit</button>
-                        <button class="btn-action btn-delete" onclick="openDeleteModal(${u.id}, '${escapeHtml(u.username)}')">🗑️ Delete</button>
+                        <button class="btn-action btn-delete" onclick="openDeleteModal(${u.id})">🗑️ Delete</button>
                     </div>
                 </td>
             `;
@@ -235,7 +235,7 @@
         document.getElementById('pwdAsterisk').style.display = 'inline';
         document.getElementById('pwdHint').textContent = 'Required for new students.';
         document.getElementById('modalTitle').textContent = 'Add New Student';
-        document.getElementById('btnSave').textContent = 'Create Student';
+        document.getElementById('btnSave').textContent = 'Save Student';
         document.getElementById('modalError').style.display = 'none';
         document.getElementById('userModal').style.display = 'flex';
     }
@@ -307,9 +307,11 @@
         }
     }
 
-    function openDeleteModal(id, username) {
+    function openDeleteModal(id) {
+        const user = allUsers.find(u => u.id === id);
+        if (!user) return;
         deleteUserId = id;
-        document.getElementById('deleteTargetName').textContent = `'${username}' (#${id})`;
+        document.getElementById('deleteTargetName').textContent = `'${user.username}' (#${id})`;
         document.getElementById('deleteModal').style.display = 'flex';
     }
 
