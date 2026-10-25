@@ -1,6 +1,6 @@
-
 package com.kuet.university.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -18,16 +18,19 @@ public class PageController {
     }
 
     @GetMapping("/ui/admins")
+    @PreAuthorize("hasRole('ADMIN')")
     public String admins() {
         return "admins";
     }
 
     @GetMapping("/ui/teachers")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TEACHER')")
     public String teachers() {
         return "teachers";
     }
 
     @GetMapping("/ui/students")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STUDENT')")
     public String students() {
         return "students";
     }
