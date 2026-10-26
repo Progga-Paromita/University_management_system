@@ -14,8 +14,7 @@
     </div>
     <div class="user-nav">
         <div class="user-badge">
-            Logged in: <strong sec:authentication="name">User</strong>
-            (<span sec:authentication="principal.authorities">Role</span>)
+            <strong sec:authentication="name">User</strong>
         </div>
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="btn-logout">Logout</button>
