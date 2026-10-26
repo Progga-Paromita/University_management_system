@@ -58,7 +58,6 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width: 80px;">ID</th>
                     <th>Username</th>
                     <th>Full Name</th>
                     <th>Email</th>
@@ -194,7 +193,6 @@
         users.forEach(u => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td><strong>#${u.id}</strong></td>
                 <td>${escapeHtml(u.username)}</td>
                 <td>${escapeHtml(u.fullName)}</td>
                 <td>${escapeHtml(u.email)}</td>
@@ -251,7 +249,7 @@
         document.getElementById('password').required = false;
         document.getElementById('pwdAsterisk').style.display = 'none';
         document.getElementById('pwdHint').textContent = 'Leave blank to keep existing password unchanged.';
-        document.getElementById('modalTitle').textContent = `Edit Teacher (#${user.id})`;
+        document.getElementById('modalTitle').textContent = 'Edit Teacher';
         document.getElementById('btnSave').textContent = 'Save Changes';
         document.getElementById('modalError').style.display = 'none';
         document.getElementById('userModal').style.display = 'flex';
@@ -310,7 +308,7 @@
         const user = allUsers.find(u => u.id === id);
         if (!user) return;
         deleteUserId = id;
-        document.getElementById('deleteTargetName').textContent = `'${user.username}' (#${id})`;
+        document.getElementById('deleteTargetName').textContent = `'${user.username}'`;
         document.getElementById('deleteModal').style.display = 'flex';
     }
 
