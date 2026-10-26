@@ -41,7 +41,6 @@
             <div>
                 <div class="card-header">
                     <div class="card-title">Admins</div>
-                    <span class="role-tag tag-admin">ADMIN ONLY</span>
                 </div>
                 <p class="card-desc">
                     Manage system administrators with full administrative privileges.
@@ -61,8 +60,6 @@
             <div>
                 <div class="card-header">
                     <div class="card-title">Teachers</div>
-                    <span class="role-tag tag-teacher" sec:authorize="hasRole('ADMIN')">ADMIN &bull; TEACHER</span>
-                    <span class="role-tag tag-teacher" sec:authorize="!hasRole('ADMIN')">TEACHER PORTAL</span>
                 </div>
                 <p class="card-desc">
                     Manage university academic faculty and teachers.
@@ -82,8 +79,6 @@
             <div>
                 <div class="card-header">
                     <div class="card-title">Students</div>
-                    <span class="role-tag tag-student" sec:authorize="hasRole('ADMIN')">ADMIN &bull; STUDENT</span>
-                    <span class="role-tag tag-student" sec:authorize="!hasRole('ADMIN')">STUDENT PORTAL</span>
                 </div>
                 <p class="card-desc">
                     Manage enrolled university students and records.
